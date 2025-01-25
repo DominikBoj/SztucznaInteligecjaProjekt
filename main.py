@@ -28,9 +28,8 @@ def count_and_sort_statistics(stats):
 def find_items(stats, item_database, your_stats):
     item_scores = []
 
-    print("\nStatystyki przeciwników:", stats)
+    #print("\nStatystyki przeciwników:", stats)
 
-    # Rozbij statystyki bohatera na listę
     your_stats = your_stats[0].split(',')
     your_stats = [stat.strip() for stat in your_stats]
 
@@ -39,7 +38,7 @@ def find_items(stats, item_database, your_stats):
         cleaned_item_stats = [stat.strip() for stat in item_stats]
         score = 0
 
-        # Dopasowanie do statystyk przeciwników
+        # Kontry poszczególnych statystyk
         for stat, count in stats:
             for item_stat in cleaned_item_stats:
                 if (stat == "AD" and item_stat == "Armor") or \
@@ -48,19 +47,18 @@ def find_items(stats, item_database, your_stats):
                    (stat == "Armor" and item_stat == "ArPen") or \
                    (stat == "MR" and item_stat == "ApPen"):
                     score += count
-                    print(f"Dopasowanie: Stat przeciwnika '{stat}' -> Przedmiot '{item['Name']}' ({item_stat})")
+                    #print(f"Dopasowanie: Stat przeciwnika '{stat}' -> Przedmiot '{item['Name']}' ({item_stat})")
 
         # Dopasowanie do statystyk bohatera
         for your_stat in your_stats:
             for item_stat in cleaned_item_stats:
                 if your_stat in item_stat:
-                    score += 2  # Dodaj większą wagę dla statystyk bohatera
-                    print(f"Wsparcie bohatera: Stat '{your_stat}' -> Przedmiot '{item['Name']}' ({item_stat})")
+                    score += 2
+                    #print(f"Wsparcie bohatera: Stat '{your_stat}' -> Przedmiot '{item['Name']}' ({item_stat})")
 
         item_scores.append((item["Name"], score))
-        print(f"Przedmiot: {item['Name']}, Statystyki: {cleaned_item_stats}, Wynik: {score}")
+        #print(f"Przedmiot: {item['Name']}, Statystyki: {cleaned_item_stats}, Wynik: {score}")
 
-    # Sortowanie wyników
     item_scores = sorted(item_scores, key=lambda x: x[1], reverse=True)
     return [item[0] for item in item_scores[:6]]
 
@@ -91,10 +89,6 @@ your_character = [name.strip() for name in your_character]
 selected_character = find_characters(your_character, data_characters)
 
 your_stats = get_statistics(selected_character)
-
-print("Dane wejściowe do find_items:")
-print("Statystyki przeciwników:", sorted_stats)
-print("Przedmioty w bazie:", [(item["Name"], item["Stats"]) for item in data_items])
 
 selected_items = find_items(sorted_stats, data_items, your_stats)
 
