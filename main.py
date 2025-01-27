@@ -31,13 +31,11 @@ def extract_stats(raw_stats):
 def find_items(stats, item_database, your_stats):
     item_scores = []
 
-    # Rozdziel statystyki bohatera na listę
     if isinstance(your_stats, list) and len(your_stats) > 0:
         your_stats = [stat.strip() for stat in your_stats[0].split(',')]
     else:
         your_stats = []
 
-    # Policz liczbę wystąpień poszczególnych statystyk przeciwników
     opponent_stat_counts = Counter({stat: count for stat, count in stats})
 
     max_opponent_stat = max(opponent_stat_counts.values(), default=0)
@@ -61,7 +59,7 @@ def find_items(stats, item_database, your_stats):
                    (stat == "HP" and item_stat == "AD") or \
                    (stat == "Armor" and item_stat == "ArPen") or \
                    (stat == "MR" and item_stat == "MrPen"):
-                    score += count * 4  # Wyższa waga za kontry przeciwników
+                    score += count * 4
 
                 # Premia za częste statystyki przeciwników
                 if stat == item_stat:
@@ -74,22 +72,18 @@ def find_items(stats, item_database, your_stats):
                     if stat == item_stat:
                         score += 5
 
-        # Debug: szczegóły przetwarzania przedmiotu
-        print(f"Item: {item['Name']}, Hero Match: {matching_hero_stats}, Opponent Score: {score}, Stats: {cleaned_item_stats}")
+        
+        #print(f"Item: {item['Name']}, Hero Match: {matching_hero_stats}, Opponent Score: {score}, Stats: {cleaned_item_stats}")
 
-        # Jeśli przedmiot ma jakąkolwiek ocenę, dodaj go do wyników
         if score > 0:
             item_scores.append((item["Name"], score))
 
-    # Posortuj wyniki według punktów
     item_scores = sorted(item_scores, key=lambda x: (x[1], x[0]), reverse=True)
 
-    # Debugowanie: Wyświetlanie szczegółów oceny
-    print("\nSzczegóły oceny przedmiotów:")
-    for item, score in item_scores:
-        print(f"{item}: {score}")
+    #print("\nSzczegóły oceny przedmiotów:")
+    #for item, score in item_scores:
+    #    print(f"{item}: {score}")
 
-    # Wybierz 6 najlepszych przedmiotów
     return [item[0] for item in item_scores[:6]]
 
 file_path_characters = "C:\\Users\\Dominik\\Documents\\GitHub\\SztucznaInteligecjaProjekt\\league_of_legends_characters.csv"
