@@ -1,6 +1,21 @@
 import csv
 from collections import Counter
 
+#####################
+#LEGENDA I OZNACZENIA
+#####################
+#AD - Attack Damage - kontrowane przez Armor, kontruje HP
+#AP - Ability Power - kontrowane przez MR , kontruje HP
+#HP - Health Points - kontrowane przez AD, kontruje Armor
+#Armor -  kontruje AD, kontrowane przez ArPen
+#MR  - Magic Resist -  kontruje AP, kontrowane przez ApPen
+#ArPen - Armor Penetration - kontruje Armor, Kontrowane przez HP
+#MrPen - Magic Resist Penetration - kontruje 
+#Mana - zasób nie kontruje ani nie ma kontr
+
+
+
+
 def find_characters(names, database):
     selected_characters = []
     for name in names:
@@ -57,8 +72,12 @@ def find_items(stats, item_database, your_stats):
                 if (stat == "AD" and item_stat == "Armor") or \
                    (stat == "AP" and item_stat == "MR") or \
                    (stat == "HP" and item_stat == "AD") or \
+                   (stat == "HP" and item_stat == "AP") or \
                    (stat == "Armor" and item_stat == "ArPen") or \
+                   (stat == "ArPen" and item_stat == "HP") or \
+                   (stat == "ApPen" and item_stat == "HP") or \
                    (stat == "MR" and item_stat == "MrPen"):
+
                     score += count * 4
 
                 # Premia za częste statystyki przeciwników
